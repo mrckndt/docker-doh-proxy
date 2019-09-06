@@ -7,7 +7,6 @@ WORKDIR /rust-doh
 RUN cargo build --release
 
 
-#FROM debian:buster-slim
 FROM alpine:latest
 
 ENV PORT 3000
