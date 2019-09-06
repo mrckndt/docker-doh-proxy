@@ -9,8 +9,7 @@ RUN cargo build --release
 
 FROM alpine:latest
 
-ENV PORT 3000
-ENV LISTEN_ADDR 127.0.0.1:$PORT
+ENV LISTEN_ADDR 127.0.0.1:3000
 ENV SERVER_ADDR 9.9.9.9:53
 ENV BIND_ADDR 0.0.0.0:0
 ENV ERR_TTL 2
@@ -20,7 +19,7 @@ ENV LOCATION_PATH /dns-query
 ENV TIMEOUT 10
 ENV MAX_CLIENTS 512
 
-EXPOSE $PORT/tcp $PORT/udp
+EXPOSE 3000/tcp 3000/udp
 
 RUN apk update && apk add libgcc libunwind
 

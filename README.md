@@ -9,8 +9,7 @@ This runs rust-doh (https://github.com/jedisct1/rust-doh) as a dns proxy at port
 The default options are (which you can override with -e option):
 
 ```
-ENV PORT 3000
-ENV LISTEN_ADDR 127.0.0.1:$PORT
+ENV LISTEN_ADDR 127.0.0.1:3000
 ENV SERVER_ADDR 9.9.9.9:53
 ENV BIND_ADDR 0.0.0.0:0
 ENV ERR_TTL 2
