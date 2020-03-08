@@ -1,15 +1,9 @@
 FROM alpine:latest as rsbuild
 
 RUN apk update && \
-    apk add ca-certificates cargo gcc make rust wget && \
-    wget https://github.com/jedisct1/rust-doh/archive/0.2.1.tar.gz && \
+    apk add ca-certificates cargo gcc make rust && \
     mkdir /doh-proxy && \
-    tar -zxf *.tar.gz -C /doh-proxy --strip-components=1
-
-WORKDIR /doh-proxy
-
-RUN cargo build --release
-
+    cargo install --root /doh-proxy doh-proxy
 
 FROM alpine:latest
 
@@ -22,7 +16,7 @@ EXPOSE 3000/tcp
 
 RUN apk update && apk add libgcc libunwind
 
-COPY --from=rsbuild /doh-proxy/target/release/doh-proxy /usr/local/bin/doh-proxy
+COPY --from=rsbuild /doh-proxy/bin/doh-proxy /usr/local/bin/doh-proxy
 
 CMD ["/bin/sh", "-c", "/usr/local/bin/doh-proxy -l $LISTEN_ADDR -c $MAX_CLIENTS -u $SERVER_ADDR -t $TIMEOUT"]
 
