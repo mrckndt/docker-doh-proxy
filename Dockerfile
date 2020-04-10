@@ -19,5 +19,3 @@ RUN apk update && apk add libgcc libunwind
 COPY --from=rsbuild /doh-proxy/bin/doh-proxy /usr/local/bin/doh-proxy
 
 CMD ["/bin/sh", "-c", "/usr/local/bin/doh-proxy -l $LISTEN_ADDR -c $MAX_CLIENTS -u $SERVER_ADDR -t $TIMEOUT"]
-
-LABEL maintainer="Marco Kundt"
