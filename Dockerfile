@@ -1,11 +1,13 @@
-FROM alpine:latest as rsbuild
+FROM debian:bullseye-slim as rsbuild
 
-RUN apk update && \
-    apk add ca-certificates cargo gcc make rust && \
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update && \
+    apt install -y --no-install-recommends ca-certificates cargo gcc make rustc && \
     mkdir /doh-proxy && \
     cargo install --root /doh-proxy doh-proxy
 
-FROM alpine:latest
+
+FROM debian:bullseye-slim
 
 ARG PUID=2000
 ARG PGID=2000
@@ -17,9 +19,8 @@ ENV MAX_CLIENTS 512
 
 EXPOSE 3000/tcp
 
-RUN apk update && apk add libgcc libunwind && \
-    addgroup -g ${PGID} doh-proxy && \
-    adduser -H -D -u ${PUID} -G doh-proxy doh-proxy
+RUN groupadd -g ${PGID} doh-proxy && \
+    adduser --no-create-home --disabled-login --uid ${PUID} --gid ${PGID} doh-proxy
 
 COPY --from=rsbuild /doh-proxy/bin/doh-proxy /usr/local/bin/doh-proxy
 
