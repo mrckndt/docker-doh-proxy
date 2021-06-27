@@ -1,10 +1,13 @@
-## rust-doh
+## doh-proxy (formerly rust-doh)
 
-This runs rust-doh (https://github.com/jedisct1/rust-doh) as a dns proxy at port 3000 for using DNS over HTTPS. By default the resulting container will use Quad9 as resolver.
+This runs doh-proxy (https://github.com/jedisct1/doh-server) as a dns proxy at port 3000 for using DNS over HTTPS. By default the resulting container will use Quad9 as resolver.
 
 ### Running the container
 #### Using defaults
-```docker run --name rust-doh --rm -p 3000:3000 flexo3001/rust-doh```
+```docker run --name doh-proxy --rm -p 3000:3000 flexo3001/doh-proxy```
+
+To not break things the same doh-proxy will be still built as `rust-doh`.
+```docker run --name doh-proxy --rm -p 3000:3000 flexo3001/rust-doh```
 
 The default options are (which you can override with -e option):
 
