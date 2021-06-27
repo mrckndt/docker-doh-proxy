@@ -1,6 +1,5 @@
 FROM debian:bullseye-slim as rsbuild
 
-ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
     apt install -y --no-install-recommends ca-certificates cargo gcc make rustc && \
     mkdir /doh-proxy && \
