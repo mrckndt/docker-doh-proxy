@@ -1,7 +1,7 @@
-FROM debian:bullseye-slim as rsbuild
+FROM rust:slim-bullseye as rsbuild
 
 RUN apt update && \
-    apt install -y --no-install-recommends ca-certificates cargo gcc make rustc && \
+    apt install -y --no-install-recommends ca-certificates gcc make && \
     mkdir /doh-proxy && \
     cargo install --root /doh-proxy doh-proxy
 
