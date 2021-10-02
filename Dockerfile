@@ -15,14 +15,15 @@ ENV LISTEN_ADDR 0.0.0.0:3000
 ENV SERVER_ADDR 9.9.9.9:53
 ENV TIMEOUT 10
 ENV MAX_CLIENTS 512
+ENV SUBPATH /dns-query
 
 EXPOSE 3000/tcp
 
 RUN groupadd -g ${PGID} doh-proxy && \
-    adduser --no-create-home --disabled-login --uid ${PUID} --gid ${PGID} doh-proxy
+    adduser --gecos 'DoH Proxy' --no-create-home --disabled-login --uid ${PUID} --gid ${PGID} doh-proxy
 
 COPY --from=rsbuild /doh-proxy/bin/doh-proxy /usr/local/bin/doh-proxy
 
 USER doh-proxy
 
-CMD ["/bin/sh", "-c", "/usr/local/bin/doh-proxy -l $LISTEN_ADDR -c $MAX_CLIENTS -u $SERVER_ADDR -t $TIMEOUT"]
+CMD ["/bin/sh", "-c", "/usr/local/bin/doh-proxy -l $LISTEN_ADDR -c $MAX_CLIENTS -u $SERVER_ADDR -t $TIMEOUT -p $SUBPATH"]
